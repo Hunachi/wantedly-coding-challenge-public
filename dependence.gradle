@@ -1,0 +1,69 @@
+ext.dependence = [
+        kotlinPlagin    : "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41",
+
+        kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.41",
+
+        support         : [
+                appCompat       : "com.android.support:appcompat-v7:27.1.1",
+                v4              : "com.android.support:support-v4:27.1.1",
+                recyclerView    : "com.android.support:recyclerview-v7:27.1.1",
+                constraintLayout: "com.android.support.constraint:constraint-layout:1.1.0",
+                cardView        : "com.android.support:cardview-v7:27.1.1",
+                design          : "com.android.support:design:27.1.1"
+        ],
+
+        junit           : "junit:junit:4.12",
+
+        runner          : "com.android.support.test:runner:1.0.2",
+
+        espresso        : "com.android.support.test.espresso:espresso-core:3.0.2",
+
+        rx              : [
+                kotlin : "io.reactivex.rxjava2:rxkotlin:2.2.0",
+                android: "io.reactivex.rxjava2:rxandroid:2.0.2",
+                java   : "io.reactivex.rxjava2:rxjava:2.1.9",
+        ],
+
+        kotshi          : [
+                compiler: "se.ansman.kotshi:compiler:1.0.3",
+                api     : "se.ansman.kotshi:api:1.0.3"
+        ],
+
+        okhttp          : [
+                core   : "com.squareup.okhttp3:okhttp:3.10.0",
+                logging: "com.squareup.okhttp3:logging-interceptor:3.10.0"
+        ],
+
+        retrofit        : [
+                core     : "com.squareup.retrofit2:retrofit:2.4.0",
+                rx       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+                converter: "com.squareup.retrofit2:converter-moshi:2.4.0"
+        ],
+
+        expandableLayout: "net.cachapa.expandablelayout:expandablelayout:2.9.2",
+
+        glide           : [
+                core    : "com.github.bumptech.glide:glide:4.7.1",
+                compiler: "com.github.bumptech.glide:compiler:4.7.1"
+        ],
+
+        dagger          : [
+                core     : 'com.google.dagger:dagger:2.16',
+                compile  : 'com.google.dagger:dagger-compiler:2.16',
+                android  : 'com.google.dagger:dagger-android:2.16',
+                support  : 'com.google.dagger:dagger-android-support:2.16',
+                processor: 'com.google.dagger:dagger-android-processor:2.16'
+        ],
+
+        lifecycle       : [
+                runtime   : "android.arch.lifecycle:runtime:1.1.1",
+                extensions: "android.arch.lifecycle:extensions:1.1.1",
+                reactive  : "android.arch.lifecycle:reactivestreams:1.1.1",
+                compiler  : "android.arch.lifecycle:compiler:1.1.1"
+        ],
+
+        paging          : [
+                runtime: "android.arch.paging:runtime:1.0.0",
+                rxjava : "android.arch.paging:rxjava2:1.0.0-alpha1"
+        ]
+]

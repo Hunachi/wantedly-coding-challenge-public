@@ -1,0 +1,69 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion sdkVersions.compileSdk
+
+
+    defaultConfig {
+        minSdkVersion sdkVersions.minSdk
+        targetSdkVersion sdkVersions.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':common')
+
+    implementation dependence.kotlin
+
+    implementation dependence.support.appCompat
+
+    androidTestImplementation dependence.runner
+    androidTestImplementation dependence.espresso
+
+    implementation dependence.rx.kotlin
+    implementation dependence.rx.java
+    implementation dependence.rx.android
+
+    implementation dependence.kotshi.api
+    kapt dependence.kotshi.compiler
+
+    implementation dependence.okhttp.core
+    implementation dependence.okhttp.logging
+
+    implementation dependence.retrofit.core
+    implementation dependence.retrofit.rx
+    implementation dependence.retrofit.converter
+
+    implementation dependence.dagger.core
+    kapt dependence.dagger.compile
+    implementation dependence.dagger.android
+    implementation dependence.dagger.support
+    kapt dependence.dagger.processor
+
+    testImplementation dependence.junit
+}
+repositories {
+    mavenCentral()
+}

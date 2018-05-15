@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">wantedly-coding-challenge-android</string>
+
+    <!--hint or text-->
+    <string name="hint_search_bar">地域や特徴，会社名など</string>
+
+    <!--description-->
+    <string name="description_search_icon">search icon</string>
+    <string name="description_expanding_trigger_button">description expanding trigger button</string>
+    <string name="description_top_image">description top image</string>
+    <string name="description_go_detail_icon">description go detail icon</string>
+    <string name="go_detail_page">もっと詳しく</string>
+    <string name="description_company_icon">description company icon</string>
+</resources>

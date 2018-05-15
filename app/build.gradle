@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion sdkVersions.compileSdk
+    defaultConfig {
+        applicationId "com.github.hunachi.wantedly_coding_challenge_android"
+        minSdkVersion sdkVersions.minSdk
+        targetSdkVersion sdkVersions.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation dependence.kotlin
+
+    implementation project(':common')
+    implementation project(':wantedly-api')
+
+    implementation dependence.support.appCompat
+    implementation dependence.support.v4
+    implementation dependence.support.recyclerView
+    implementation dependence.support.constraintLayout
+    implementation dependence.support.cardView
+    implementation dependence.support.design
+
+    implementation dependence.expandableLayout
+
+    implementation dependence.glide.core
+    annotationProcessor dependence.glide.compiler
+
+    implementation dependence.dagger.core
+    kapt dependence.dagger.compile
+    implementation dependence.dagger.android
+    implementation dependence.dagger.support
+    kapt dependence.dagger.processor
+
+    implementation dependence.rx.kotlin
+    implementation dependence.rx.java
+    implementation dependence.rx.android
+
+    testImplementation dependence.junit
+
+    implementation dependence.lifecycle.runtime
+    implementation dependence.lifecycle.extensions
+    implementation dependence.lifecycle.reactive
+    kapt dependence.lifecycle.compiler
+
+    implementation dependence.paging.runtime
+    implementation dependence.paging.rxjava
+
+    androidTestImplementation dependence.runner
+    androidTestImplementation dependence.espresso
+}
+repositories {
+    mavenCentral()
+}
