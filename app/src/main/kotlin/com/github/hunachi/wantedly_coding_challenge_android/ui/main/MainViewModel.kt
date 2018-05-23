@@ -19,43 +19,47 @@ class MainViewModel @Inject constructor(
         private val repository: DataRepository
 ) : ViewModel() {
     
-    private var loadingCount = 0
     private var nowListCount = 0
     
     private val keyWord: MutableLiveData<SearchData> = MutableLiveData()
     
+    private var factory: DataSourceFactory? = null
+    
     val datas: LiveData<PagedList<DataViewModel>> = Transformations.switchMap(
         keyWord, { it ->
-            LivePagedListBuilder(DataSourceFactory(repository, it.listener, it.keyWord), PagedList.Config.Builder()
-                    .setInitialLoadSizeHint(PER_PAGE)
-                    .setPageSize(PER_PAGE)
-                    .build()).build()
+            factory?.let {
+                LivePagedListBuilder(it, PagedList.Config.Builder()
+                        .setInitialLoadSizeHint(PER_PAGE)
+                        .setPageSize(PER_PAGE)
+                        .build()).build()
+            }
         }
     )
     
     val netWorkState: LiveData<NetWorkState> = Transformations.switchMap(
         keyWord, { it ->
-            DataSourceFactory(repository, it.listener, it.keyWord).dataSource.netWorkState
+            factory = DataSourceFactory(repository, it.listener, it.keyWord)
+            factory?.dataSource?.netWorkState
         }
     )
     
-    val dataState: MutableLiveData<Boolean> = MutableLiveData()
-    
-    fun setState(state: NetWorkState) {
-        if (state == NetWorkState.LOADING) loadingCount++
-        else {
-            loadingCount--
-            if (nowListCount == 0 && loadingCount == 0) dataState.value = false
+    val dataState: LiveData<Boolean> = Transformations.map(
+        netWorkState, { it ->
+            when {
+                it == null                 -> false
+                it == NetWorkState.LOADING -> true
+                nowListCount == 0          -> false
+                else                       -> true
+            }
         }
-    }
+    )
     
     fun setListCount(count: Int) {
         nowListCount = count
     }
     
     fun search(keyWord: String, listener: DataItemListener) {
-        nowListCount = 0
-        dataState.value = true
+        nowListCount = -1
         this.keyWord.value = SearchData(listener, keyWord)
     }
     

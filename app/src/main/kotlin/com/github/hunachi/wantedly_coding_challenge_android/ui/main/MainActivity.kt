@@ -42,11 +42,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.also {
             binding.mainViewModel = it
             
-            it.netWorkState.observe(this, Observer { state ->
-                if (state == null) return@Observer
-                it.setState(state)
-            })
-            
             it.datas.observe(this, Observer {list ->
                 if (list == null) return@Observer
                 it.setListCount(list.size)
