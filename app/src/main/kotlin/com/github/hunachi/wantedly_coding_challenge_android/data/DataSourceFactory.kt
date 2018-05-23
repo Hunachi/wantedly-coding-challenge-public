@@ -1,4 +1,4 @@
-package com.github.hunachi.wantedly_coding_challenge_android.ui.dataList.paging
+package com.github.hunachi.wantedly_coding_challenge_android.data
 
 import android.arch.paging.DataSource
 import com.github.hunachi.wantedly_api.domain.DataRepository

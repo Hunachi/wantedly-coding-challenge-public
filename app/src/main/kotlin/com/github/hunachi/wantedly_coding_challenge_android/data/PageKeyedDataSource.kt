@@ -1,4 +1,4 @@
-package com.github.hunachi.wantedly_coding_challenge_android.ui.dataList.paging
+package com.github.hunachi.wantedly_coding_challenge_android.data
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -8,6 +8,7 @@ import com.github.hunachi.wantedly_coding_challenge_android.domain.DataItemListe
 import com.github.hunachi.wantedly_coding_challenge_android.domain.dataList.convertToViewModel
 import com.github.hunachi.wantedly_coding_challenge_android.domain.dataList.paging.NetWorkState
 import com.github.hunachi.wantedly_coding_challenge_android.ui.dataList.DataViewModel
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class PageKeyedDataSource(
