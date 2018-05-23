@@ -23,9 +23,6 @@ class MainActivity : AppCompatActivity() {
     
     private val dataRecyclerViewAdapter = DataRecyclerViewAdapter()
     
-    private var loadingCount = 0
-    private var nowListCount = 0
-    
     @Inject
     lateinit var mainViewModel: MainViewModel
     
@@ -41,6 +38,21 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
             adapter = dataRecyclerViewAdapter
         }
+        
+        mainViewModel.also {
+            binding.mainViewModel = it
+            
+            it.netWorkState.observe(this, Observer { state ->
+                if (state == null) return@Observer
+                it.setState(state)
+            })
+            
+            it.datas.observe(this, Observer {list ->
+                if (list == null) return@Observer
+                it.setListCount(list.size)
+                dataRecyclerViewAdapter.submitList(list)
+            })
+        }
     }
     
     private val dataItemListener: DataItemListener = {
@@ -48,26 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
     
     val onTextChange: SearchListener = { str: String ->
-        mainViewModel.also {
-            nowListCount = 0
-            binding.mainViewModel = it
-            
-            it.setUp(str, dataItemListener)
-            
-            it.netWorkState.observe(this, Observer { state ->
-                if (state == null) return@Observer
-                if (state == NetWorkState.LOADING) loadingCount++
-                else {
-                    loadingCount--
-                    if (nowListCount == 0 && loadingCount == 0) it.setNoData()
-                }
-            })
-            
-            it.datas.observe(this, Observer {
-                if (it == null) return@Observer
-                nowListCount = it.size
-                dataRecyclerViewAdapter.submitList(it)
-            })
-        }
+        mainViewModel.search(str, dataItemListener)
     }
 }
