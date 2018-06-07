@@ -35,7 +35,9 @@ class MainActivity : AppCompatActivity() {
         }
         
         with(binding.list) {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.VERTICAL
+            }
             adapter = dataRecyclerViewAdapter
         }
         
@@ -44,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             
             it.datas.observe(this, Observer {list ->
                 if (list == null) return@Observer
-                it.setListCount(list.size)
                 dataRecyclerViewAdapter.submitList(list)
             })
         }

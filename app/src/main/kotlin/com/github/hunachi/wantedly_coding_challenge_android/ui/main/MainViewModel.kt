@@ -6,60 +6,41 @@ import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import android.util.Log
 import com.github.hunachi.wantedly_api.domain.DataRepository
 import com.github.hunachi.wantedly_coding_challenge_android.data.DataSourceFactory
 import com.github.hunachi.wantedly_coding_challenge_android.domain.DataItemListener
 import com.github.hunachi.wantedly_coding_challenge_android.domain.dataList.paging.NetWorkState
 import com.github.hunachi.wantedly_coding_challenge_android.domain.dataList.paging.SearchData
+import com.github.hunachi.wantedly_coding_challenge_android.ui.dataList.DataBoundaryCallback
 import com.github.hunachi.wantedly_coding_challenge_android.ui.dataList.DataViewModel
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-        private val repository: DataRepository
+    private val repository: DataRepository
 ) : ViewModel() {
-    
-    private var nowListCount = 0
     
     private val keyWord: MutableLiveData<SearchData> = MutableLiveData()
     
     private var factory: DataSourceFactory? = null
     
     val datas: LiveData<PagedList<DataViewModel>> = Transformations.switchMap(
-        keyWord, { it ->
-            factory?.let {
-                LivePagedListBuilder(it, PagedList.Config.Builder()
-                        .setInitialLoadSizeHint(PER_PAGE)
-                        .setPageSize(PER_PAGE)
-                        .build()).build()
-            }
-        }
-    )
-    
-    val netWorkState: LiveData<NetWorkState> = Transformations.switchMap(
-        keyWord, { it ->
-            factory = DataSourceFactory(repository, it.listener, it.keyWord)
+        keyWord, { _ ->
             factory?.dataSource?.netWorkState
-        }
-    )
-    
-    val dataState: LiveData<Boolean> = Transformations.map(
-        netWorkState, { it ->
-            when {
-                it == null                 -> false
-                it == NetWorkState.LOADING -> true
-                nowListCount == 0          -> false
-                else                       -> true
+            val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(PER_PAGE)
+                .setPrefetchDistance(PER_PAGE*2)
+                .setPageSize(PER_PAGE).build()
+            factory?.let {
+                LivePagedListBuilder(it, config)
+                    .setBoundaryCallback(DataBoundaryCallback())
+                    .build()
             }
         }
     )
-    
-    fun setListCount(count: Int) {
-        nowListCount = count
-    }
     
     fun search(keyWord: String, listener: DataItemListener) {
-        nowListCount = -1
+        factory = DataSourceFactory(repository, listener, keyWord)
         this.keyWord.value = SearchData(listener, keyWord)
     }
     

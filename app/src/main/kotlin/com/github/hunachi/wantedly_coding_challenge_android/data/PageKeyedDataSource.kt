@@ -8,7 +8,6 @@ import com.github.hunachi.wantedly_coding_challenge_android.domain.DataItemListe
 import com.github.hunachi.wantedly_coding_challenge_android.domain.dataList.convertToViewModel
 import com.github.hunachi.wantedly_coding_challenge_android.domain.dataList.paging.NetWorkState
 import com.github.hunachi.wantedly_coding_challenge_android.ui.dataList.DataViewModel
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class PageKeyedDataSource(
@@ -47,7 +46,7 @@ class PageKeyedDataSource(
         
         repository.data(keyWord, page.toLong()).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                val next = if (it.size < perPage || page > 5) null else page + 1
+                val next = if (it.size < perPage) null else page + 1
                 _netWorkState.postValue(NetWorkState.SUCCESS)
                 callback(it.map { it.convertToViewModel(dataItemListener) }, next)
             }, {
