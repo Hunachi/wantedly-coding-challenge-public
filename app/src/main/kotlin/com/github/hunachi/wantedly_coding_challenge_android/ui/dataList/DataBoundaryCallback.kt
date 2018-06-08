@@ -7,16 +7,16 @@ import android.util.Log
 class DataBoundaryCallback : PagedList.BoundaryCallback<DataViewModel>() {
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
-        Log.e("loading", "アイテムが0だったよ！")
+        Log.e("loading", "データがなかったよ！")
     }
     
     override fun onItemAtFrontLoaded(itemAtFront: DataViewModel) {
         super.onItemAtFrontLoaded(itemAtFront)
-        Log.d("loading", "最初の読み込み中！")
+        //普通使わない？　もっと前のデータを読み込みたい時に使う？
     }
     
     override fun onItemAtEndLoaded(itemAtEnd: DataViewModel) {
         super.onItemAtEndLoaded(itemAtEnd)
-        Log.d("loading", "読み込み終わったよ！")
+        Log.d("loading", "データを全部表示し終わったよ！")
     }
 }

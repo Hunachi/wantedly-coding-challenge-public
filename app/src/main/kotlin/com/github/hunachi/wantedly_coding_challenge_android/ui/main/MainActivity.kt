@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.also {
             binding.mainViewModel = it
             
-            it.datas.observe(this, Observer {list ->
+            mainViewModel.datas.observe(this, Observer {list ->
                 if (list == null) return@Observer
                 dataRecyclerViewAdapter.submitList(list)
             })

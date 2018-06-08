@@ -25,14 +25,20 @@ class MainViewModel @Inject constructor(
     
     val datas: LiveData<PagedList<DataViewModel>> = Transformations.switchMap(
         keyWord, { _ ->
-            factory?.dataSource?.netWorkState
+            /*Repositoryとかを別で作るべき*/
             val config = PagedList.Config.Builder()
+                //nullのitemをカウントするかどうか？（デフォルトはtrue）
                 .setEnablePlaceholders(false)
+                //最初に読み込むitemの数．
                 .setInitialLoadSizeHint(PER_PAGE)
-                .setPrefetchDistance(PER_PAGE*2)
-                .setPageSize(PER_PAGE).build()
+                // Listがどれくらいスクロールされたら次のpageの読み込むか決める(引数は表示されているitemとリスト末尾の距離)
+                .setPrefetchDistance(PER_PAGE * 3)
+                //1ページ(一回に読み込む)item数を指定．
+                .setPageSize(PER_PAGE)
+                .build()
             factory?.let {
                 LivePagedListBuilder(it, config)
+                    //BoundaryCallbackはここでset．
                     .setBoundaryCallback(DataBoundaryCallback())
                     .build()
             }
